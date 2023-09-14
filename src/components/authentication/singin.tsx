@@ -140,8 +140,8 @@ export default function Singin(){
             <SignupSuccedNotification />
             <PasswordUpdatedNotification />
             <Notification />
-            <h1 className='py-4 text-5xl font-semibold'>Connexion</h1>
-            <p className="py-7 text-sm text-gray-600">
+            <h1 className=' md:py-4 text-5xl font-semibold'>Connexion</h1>
+            <p className=" max-lg:bg-slate-200  max-md:text-[.6rem] max-md:leading-3 max-lg:p-3 max-lg:my-4 max-lg:rounded md:py-7 text-sm text-gray-600">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores harum perferendis blanditiis cum velit. Molestias ad id vero amet sed commodi quisquam laboriosam recusandae facere tempore? Maxime placeat sapiente iure?
             </p>
 
