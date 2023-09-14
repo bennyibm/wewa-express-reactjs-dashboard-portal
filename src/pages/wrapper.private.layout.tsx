@@ -50,9 +50,9 @@ export default function PrivatePagesLayout(){
         <div className="max-lg:relative flex-1 flex max-lg:flex-col xl:gap-x-6 xl:p-6 min-h-screen">
             <div className="lg:hidden sticky top-0 p-4 w-full bg-white flex justify-between items-center">
                 <button onClick={ () => setShowMenu(true)} className="group flex flex-col w-7 h-5 relative cursor-pointer">
-                    <span className="w-8 h-0.5 bg-slate-400 rounded-full absolute left-0 top-0" />
-                    <span className="w-6 h-0.5 bg-slate-400 rounded-full absolute left-0 top-[8px]" />
-                    <span className="w-4 h-0.5 bg-slate-400 rounded-full absolute left-0 top-[16px]" />
+                    <span className="w-8 h-0.5 bg-slate-400 group-hover:bg-primary rounded-full absolute left-0 top-0" />
+                    <span className="w-6 h-0.5 bg-slate-400 group-hover:bg-primary rounded-full absolute left-0 top-[8px]" />
+                    <span className="w-4 h-0.5 bg-slate-400 group-hover:bg-primary rounded-full absolute left-0 top-[16px]" />
                 </button>
                 <div className="flex gap-x-2 items-center">
                     <img className="w-8 h-8 xl:w-14 xl:h-14 rounded-full" src="https://via.placeholder.com/60x60" alt=""/>
@@ -64,7 +64,7 @@ export default function PrivatePagesLayout(){
                 <div className="relative z-10 min-h-screen w-72 rounded-lg bg-white shadow flex flex-col gap-y-8">
                     <div className="flex items-center justify-between p-2.5">
                         <Logo className="w-20" />
-                        <button onClick={ () => setShowMenu(false)} className="text-2xl text-red-600">
+                        <button onClick={ () => setShowMenu(false)} className="text-2xl text-red-600 hover:text-slate-700">
                             <AiOutlineClose/>
                         </button>
                     </div>

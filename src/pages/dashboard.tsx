@@ -20,18 +20,18 @@ export default function Dashboard({setHeading}: props) {
 
     return(
         <main className="flex-1 flex flex-col gap-y-10">
-            <div className="flex xl:justify-between gap-y-10 gap-x-4 lg:gap-x-6 xl:gap-x-10">
-                <div className="text-slate-700 w-40 lg:w-52 xl:w-72 h-40 p-5 bg-white flex justify-center items-center flex-col gap-y-4 rounded-lg shadow">
-                    <h3 className="text-primary text-center text-lg">Courses encourt</h3>
-                    <span className="text-center text-4xl font-semibold">300</span>
+            <div className="py-4 grid grid-cols-2 md:grid-cols-3 lg:flex xl:justify-between gap-4 sm:gap-8 xl:gap-10">
+                <div className="text-slate-600 lg:w-64 xl:w-72 h-fit md:h-40 p-5 bg-white flex flex-col gap-y-4 rounded-lg shadow">
+                    <h3 className="text-300 text-sm md:text-xl">Courses encourt</h3>
+                    <span className="text-4xl md:text-7xl font-semibold">300</span>
                 </div>
-                <div className="text-slate-700 w-40 lg:w-52 xl:w-72 h-40 p-5 bg-white flex justify-center items-center flex-col gap-y-4 rounded-lg shadow">
-                    <h3 className="text-primary text-center text-lg">Coursiers</h3>
-                    <span className="text-center text-4xl font-semibold">300</span>
+                <div className="text-slate-600 lg:w-64 xl:w-72 h-fit md:h-40 p-5 bg-white flex flex-col gap-y-4 rounded-lg shadow">
+                    <h3 className="text-300 text-sm md:text-xl">Coursiers</h3>
+                    <span className="text-4xl md:text-7xl font-semibold">300</span>
                 </div>
-                <div className="text-slate-700 w-40 lg:w-52 xl:w-72 h-40 p-5 bg-white flex justify-center items-center flex-col gap-y-4 rounded-lg shadow">
-                    <h3 className="text-primary text-center text-lg">Clients (Mobile)</h3>
-                    <span className="text-center text-4xl font-semibold">300</span>
+                <div className="text-slate-600 lg:w-64 xl:w-72 h-fit md:h-40 p-5 bg-white flex flex-col gap-y-4 rounded-lg shadow">
+                    <h3 className="text-300 text-sm md:text-xl">Clients (Mobile)</h3>
+                    <span className="text-4xl md:text-7xl font-semibold">300</span>
                 </div>
             </div>
             <div className="flex-1 flex flex-col gap-y-2 shadow bg-white rounded-lg overflow-hidden">
