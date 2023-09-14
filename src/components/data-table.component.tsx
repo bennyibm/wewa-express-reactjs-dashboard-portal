@@ -62,7 +62,7 @@ export default function DataTable<T extends AbstractEntity>({title, headers, ren
         <div className="">
             <div className="bg-white flex max-xl:flex-col xl:items-center xl:justify-between gap-y-4 p-3 xl:p-6 border-b-2 border-primary/10">
                 { title && <h3 className="text-slate-700 text-2xl">{title}</h3>}
-                <div className=" max-xl:w-full flex-1 flex justify-between">
+                <div className=" max-xl:w-full max-xl:flex-1 flex justify-between">
                     {!noSearchBox &&  <SearchBox placeholder="Saisissez votre recherche ici" callback={ search => setStates( prev => ({...prev, page : 1, search})) } debounceDuration={1000} />}
                     { headbutton && <Button className="h-fit flex items-center gap-x-2" link={headbutton.link} onClick={headbutton.onClick}>{headbutton.label} {headbutton.icon}</Button> }
                 </div>
