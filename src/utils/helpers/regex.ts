@@ -1,0 +1,1 @@
+export const isMatchingPattern = (text : string, pattern : string) => (new RegExp(pattern)).test(text)

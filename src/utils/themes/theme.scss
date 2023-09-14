@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+@layer base{
+
+    html{
+        font-size : 100%;
+        @apply scroll-smooth;
+
+        ::-webkit-scrollbar{
+            @apply  w-1 rounded-sm bg-gray-300;
+        }
+        ::-webkit-scrollbar-thumb{
+            @apply absolute w-1 rounded-md bg-primary;
+        }
+    }
+
+    *{
+        @apply transition-all duration-200 appearance-none outline-none;
+    }
+    body{
+        @apply overflow-x-hidden;
+        // height : 300rem;
+    }
+    .container-{
+        
+        @apply mx-4 md:mx-10 lg:mx-20;
+    }
+
+}
+
+body{
+    // height: 300rem;
+    @apply bg-primary/5;
+}
