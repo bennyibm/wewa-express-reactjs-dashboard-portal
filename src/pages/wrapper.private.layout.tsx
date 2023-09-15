@@ -10,7 +10,7 @@ import { AiOutlinePoweroff, AiOutlineClose } from "react-icons/ai";
 
 export default function PrivatePagesLayout(){
     const [showMenu, setShowMenu] = useState(false)
-    const location = useLocation()
+    const {pathname} = useLocation()
     const navigate = useNavigate()
     const { user, logout } = useAuth()
     const pageTitleRef = useRef<HTMLDivElement | null>(null)
@@ -43,7 +43,11 @@ export default function PrivatePagesLayout(){
           return () => {
             document.removeEventListener('keydown', onkeydown)
           }
-    }, [location])
+    }, [])
+
+    useEffect( () => {
+        setShowMenu(false)
+    }, [pathname])
 
     // return (
     return !user ? <></> :(
@@ -59,7 +63,7 @@ export default function PrivatePagesLayout(){
                     <span className="font-normal" >{user.first}</span>
                 </div>
             </div>
-            <div className={`${showMenu ? "left-0" : "-left-full" } lg:hidden fixed top-0 w-full`}>
+            <div className={`${showMenu ? "left-0" : "-left-full" } lg:hidden fixed z-20 top-0 w-full`}>
                 <div onClick={ () => setShowMenu(false)} className="absolute inset-0 bg-black/60 backdrop-blur" />
                 <div className="relative z-10 min-h-screen w-72 rounded-lg bg-white shadow flex flex-col gap-y-8">
                     <div className="flex items-center justify-between p-2.5">
