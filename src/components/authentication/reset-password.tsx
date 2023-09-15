@@ -81,8 +81,8 @@ export default function ResetPassword(){
             {/* <div className="fas fa-refresh -mt-16 mb-8 mx-auto w-24 h-24 flex justify-center items-center bg-white text-5xl shadow rounded-full" /> */}
             <Notification />
             
-            <h1 className='py-4 text-5xl font-semibold'>Mot de passe oublié</h1>
-            <p className="py-7 text-sm text-gray-400">
+            <h1 className='py-4 text-3xl md:text-5xl font-semibold'>Mot de passe oublié</h1>
+            <p className=" max-lg:bg-slate-200  max-md:text-[.6rem] max-md:leading-3 max-lg:p-3 max-lg:my-4 max-lg:rounded md:py-7 text-sm text-gray-600">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores harum perferendis blanditiis cum velit. Molestias ad id vero amet sed commodi quisquam laboriosam recusandae facere tempore? Maxime placeat sapiente iure?
             </p>
             <MyForm
