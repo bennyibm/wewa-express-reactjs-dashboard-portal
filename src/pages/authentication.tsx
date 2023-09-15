@@ -14,7 +14,7 @@ export default function Authentication(){
 
     return user ? <></> : (
         <Section container={false} className="md:grid md:grid-cols-3 lg:grid-cols-2 bg-cover bg-center">
-            <div className="min-h-screen  md:col-span-2 lg:col-span-1 flex-1 flex flex-col justify-center bg-white lg:bg-gray-200 shadow px-4 lg:p-16">
+            <div className="min-h-screen  md:col-span-2 lg:col-span-1 flex-1 flex flex-col justify-center bg-white lg:bg-gray-200 shadow p-4 lg:p-16">
                 <Logo />
                 <Routes>
                     <Route path="" element={<Singin />}  />
