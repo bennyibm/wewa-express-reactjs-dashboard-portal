@@ -39,7 +39,6 @@ export default function PrivatePagesLayout(){
             }
           }
           document.addEventListener('keydown', onkeydown)
-          document.body.classList.add('overflow-hidden')
           return () => {
             document.removeEventListener('keydown', onkeydown)
           }
