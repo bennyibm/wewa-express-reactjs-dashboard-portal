@@ -75,7 +75,7 @@ export function InputFieldTemplate1( props : Field & {name : string, validity? :
                 <input  
                     className='rounded-md p-2 h-12 w-full border'
                     id={props.id}
-                    type={ props.type === FieldInputType.PASSWORD ? props.type : undefined} 
+                    type={ (props.type === FieldInputType.PASSWORD) || (props.type === FieldInputType.DATE) ? props.type : undefined} 
                     name={props.name} 
                     onChange={e => props.onChange && props.onChange({name : e.target.name, value : e.target.value})} 
                     placeholder={props.placeholder}

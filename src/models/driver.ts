@@ -1,7 +1,8 @@
 import AbstractEntity from "./common/abstract-entity";
 import User from './user/user';
 
-type Driver = AbstractEntity & User & {
+type Driver = AbstractEntity & {
+    user: User
     gender: string
 }
 

@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Delivery } from '../../models';
+import { generateDrivers } from './drivers';
 
 export function generateDeliveries(n: number){
     return Array(n).fill(null).map( () : Delivery => {
@@ -17,7 +18,7 @@ export function generateDeliveries(n: number){
                 contact: { phone, email: faker.internet.email({firstName: first, lastName: last})  },
                 address: {}
             },
-            driver: { first: faker.person.firstName(), last: faker.person.lastName(), gender: faker.person.sex() },
+            driver: generateDrivers(1)[0],
             package: { 
                 description: faker.commerce.productDescription(), 
                 beneficiary: { 

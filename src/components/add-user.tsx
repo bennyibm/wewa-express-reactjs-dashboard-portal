@@ -19,9 +19,9 @@ type States = {
     isLoading?: boolean
     data?: Partial<Driver>
 }
-export default function EditDriver({onClose, driver}: props) {
+export default function AddAdmin({onClose, driver}: props) {
     const [states, setStates] = useState<States>()
-    const { save } = useApiCrud("drivers")
+    const { save } = useApiCrud("auth/admins")
     const onSubmit= useCallback( (fields: any) => {
         
         console.log(fields);
@@ -30,7 +30,7 @@ export default function EditDriver({onClose, driver}: props) {
         setTimeout( () => {
             save(fields)
             .then( res => {
-                raiseCustomEvent("show-alert", { message: "Le nouveau chauffeur a bien été enregistré", severity: "success"  })
+                raiseCustomEvent("show-alert", { message: "Administrateur créé", severity: "success"  })
                 onClose()
             })
             .catch( err => {
@@ -42,7 +42,7 @@ export default function EditDriver({onClose, driver}: props) {
     
     return(
         <Modal showCloseButton onClose={onClose}>
-            <h3 className="bg-primary/20 p-4 md:text-2xl border-b-2 border-primary/10"> { driver ? "" : "Enregistrer un nouveau Chauffeur"} </h3>
+            <h3 className="bg-primary/20 p-4 md:text-2xl border-b-2 border-primary/10"> { driver ? "" : "Créer un administrateur"} </h3>
             <MyForm onSubmit={onSubmit} className="p-4 md:p-8 flex flex-wrap justify-between gap-4"
                 onChange={({name, value}: {name: string, value: string}) =>  setStates( prev => ({...prev, data: {...prev?.data, [name]: value }}))}
                 fields={{ 
@@ -69,21 +69,6 @@ export default function EditDriver({onClose, driver}: props) {
                         type: FieldInputType.EMAIL,
                         pattern: InputPatterns.EMAIL
                     },
-                    dob: {
-                        label: "Date de naissance",
-                        placeholder: "",
-                        type: FieldInputType.DATE,
-                        required: false,
-                        extraData: {halfWidth: true}
-                    },
-                    gender: {
-                        label: "Genre",
-                        placeholder: "",
-                        // renderFieldComponent: InputFieldCustomSelect,
-                        renderFieldComponent: InputRadioButtonList,
-                        required: true,
-                        extraData: {halfWidth: true, autoFocus: true, flexWrapOptions: true, addWrapper: true, options: [ {label: "Homme", value: "homme"}, { label: "Femme", value:"femme"} ]}
-                    }
                 }}
                 onEmptyErrorMessage="Champ obligatoir"
                 onInvalidErrorMessage="Format invalide"

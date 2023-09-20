@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+
 import GlobalContextProvider from "./contexts/context/global";
 import {HomePage, PageNotFound } from "./pages";
 import Authentication from "./pages/authentication";

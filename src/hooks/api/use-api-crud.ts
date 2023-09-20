@@ -38,9 +38,8 @@ export default function useApiCrud<T extends AbstractEntity>(path : string, base
         return api.delete(id)
     }, [api])
 
-    const count = useCallback( async (filter : {}) => {
-        const response = await api.get('count', { data: filter });
-        return response.data;
+    const count = useCallback( (filter? : {}) => {
+        return api.get('count', { data: filter }).then( res => res.data)
     }, [api])
 
     const customRequest = useCallback( async <TRequest = T>(config : AxiosRequestConfig) => {

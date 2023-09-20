@@ -10,7 +10,7 @@ export default function useAuth(){
 
     const {user, accessToken, setAuthSession} = useContext(GlobalContext)
 
-    const {api, addRequestInterceptor} = useApi('auth', "https://api.auth.diginco.com")
+    const {api, addRequestInterceptor} = useApi('auth') //, "https://api.auth.diginco.com")
 
     const signup = useCallback( async (user : User & {password? : string}) => {
         return await api.post<User>('signup', {...user, role : 'author'})
@@ -30,15 +30,15 @@ export default function useAuth(){
     }, [api])
 
     const signin = useCallback( async (loginRequest : {username : string, password : string}) => {
-        const user = DUMMY_USERS.find( (user) => (user.username === loginRequest.username) && (user.password === loginRequest.password) )
-        if( user ){
-            setAuthSession( { user, token: faker.database.mongodbObjectId() })
-            return Promise.resolve()
-        }else{
-            throw new Error()
-            // Promise.reject("Utilisateur non valide")
-        }
-        // api.post<LoginResponse>('signin', loginRequest ).then( response => setAuthSession( response.data))
+        // const user = DUMMY_USERS.find( (user) => (user.username === loginRequest.username) && (user.password === loginRequest.password) )
+        // if( user ){
+        //     setAuthSession( { user, token: faker.database.mongodbObjectId() })
+        //     return Promise.resolve()
+        // }else{
+        //     throw new Error()
+        //     // Promise.reject("Utilisateur non valide")
+        // }
+        return api.post<LoginResponse>('login', loginRequest ).then( response => setAuthSession( response.data))
     }, [api, setAuthSession ])
 
     const logout = useCallback( async () => {

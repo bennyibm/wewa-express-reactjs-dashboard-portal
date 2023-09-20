@@ -21,7 +21,7 @@ export default function DeliveryPage({setHeading}: props){
     const headers= useMemo( () => {
         const renderDriver = (delivery?: Delivery) => {
             if(delivery?.driver){
-                return `${delivery.driver.first} ${delivery.driver.last}`
+                return `${delivery.driver.user.first} ${delivery.driver.user.last}`
             }else{
                 return (
                     <Button onClick={() => {} } className='bg-slate-100 hover:bg-slate-300 text-slate-700 text-lg p-1 flex flex-col items-center gap-y-0'>

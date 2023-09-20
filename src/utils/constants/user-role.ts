@@ -1,6 +1,6 @@
 enum UserRole{
-    AUTHOR = 'author',
-    READER = 'reader',
+    AUTHOR = 'client',
+    READER = 'driver',
     ADMIN = 'admin',
     SUPER_ADMIN = 'super_admin'
 }

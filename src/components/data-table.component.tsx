@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { CgDetailsMore } from "react-icons/cg"
+import { PiList } from "react-icons/pi"
 import SearchBox from "./search-box"
 import ErrorComponent from "./error-component"
 import { GetAllParams } from "../hooks/api/use-api-crud"
@@ -68,19 +69,21 @@ export default function DataTable<T extends AbstractEntity>({title, headers, ren
                 </div>
             </div>
             <table className="px-6 w-full">
-                <thead>
-                    <tr className="border-b bg-primary/10">
-                        { headers.map( ({label, key}, index) => (
-                            <th key={index} className="font-semibold text-left p-4">{label}</th>
-                        ))}
-                        {/* { actionButton && ( <th className="bg-primary/40 w-fit text-left p-4"> Action </th> ) } */}
-                    </tr>
-                </thead>
+                { !states.isLoading && ((states.data?.contents?.length || 0) > 0) && (                    
+                    <thead>
+                        <tr className="border-b bg-primary/10">
+                            { headers.map( ({label, key}, index) => (
+                                <th key={index} className="font-semibold text-xs sm:text-base text-left p-4">{label}</th>
+                            ))}
+                            {/* { actionButton && ( <th className="bg-primary/40 w-fit text-left p-4"> Action </th> ) } */}
+                        </tr>
+                    </thead>
+                ) }
                 <tbody className="w-full">
                     { !states.isLoading && states.data?.contents?.map( item => (
-                        <tr key={item._id} className="text-sm w-full border-b odd:bg-primary/[.03]">
+                        <tr key={item._id} className="text-xs sm:text-sm w-full border-b odd:bg-primary/[.03]">
                             { headers.map( ({key, render}, headerIndex) => (
-                                <td className="py-2 px-4" key={headerIndex}>{ render ? render(item) : item[key] as any}</td>
+                                <td className="p-4" key={headerIndex}>{ render ? render(item) : item[key] as any}</td>
                             )) }
 
                             { actionButton && (
@@ -108,6 +111,15 @@ export default function DataTable<T extends AbstractEntity>({title, headers, ren
                     <tr></tr>
                 </tfoot>
             </table>
+
+            { !states.isLoading && (states.data?.totalElements === 0) && (
+                <div className="text-slate-400 text-sm font-light flex flex-col gap-y-2 justify-center items-center py-4 h-40">
+                    <span className="text-5xl ">
+                        <PiList />
+                    </span>
+                    la liste est présentement vide!
+                </div>
+            ) }
         </div>
     )
 }
