@@ -10,9 +10,10 @@ import { AiOutlinePoweroff, AiOutlineClose } from "react-icons/ai";
 import Alert from "@material-ui/lab/Alert";
 import Administrators from './admins.page';
 import UserRole from "../utils/constants/user-role";
+import { deleteFromLocalStorage, getFromLocalStorage, saveToLocalStorage } from "../utils/helpers/local-storage";
 
 export default function PrivatePagesLayout(){
-    const [showAlert, setShowAlert] = useState< {message: string, severity: 'success' | 'info' | 'warning' | 'error'} | undefined>()
+    const [showAlert, setShowAlert] = useState< {message: string, severity: 'success' | 'info' | 'warning' | 'error'} | undefined>( getFromLocalStorage("alert") )
 
     const [showMenu, setShowMenu] = useState(false)
     const {pathname} = useLocation()
@@ -60,8 +61,19 @@ export default function PrivatePagesLayout(){
 
     useEffect( () => {
         setShowMenu(false)
-        setShowAlert(undefined)
+        // setShowAlert(undefined)
     }, [pathname])
+
+    useEffect( () => {
+        if(!showAlert){
+            deleteFromLocalStorage("alert")
+        }else{
+            saveToLocalStorage("alert", showAlert)
+            setTimeout( () => {
+                setShowAlert(undefined)
+            }, 10000)
+        }
+    }, [showAlert])
 
     useEffect( () => {
         if(showMenu){
