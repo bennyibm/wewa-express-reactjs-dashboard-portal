@@ -60,6 +60,7 @@ export default function PrivatePagesLayout(){
 
     useEffect( () => {
         setShowMenu(false)
+        setShowAlert(undefined)
     }, [pathname])
 
     useEffect( () => {
