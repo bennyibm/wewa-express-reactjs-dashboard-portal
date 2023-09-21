@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useApiCrud } from "../hooks"
 import { Driver, User } from "../models"
 import { FiUserPlus } from "react-icons/fi"
@@ -26,6 +26,13 @@ export default function Administrators({setHeading}: props){
             <DataTable<Partial<User>> title="" fetchData={findAll} actionButton={{ label:"détails", link:"" }} headers={headers} headbutton={{ label: "Ajouter", onClick: () => setShowAddUser(true), icon: <FiUserPlus /> }} />
         </div>
     ), [findAll, headers])
+
+    const onEditClosed = useCallback( (succeded?: boolean) => {
+        setShowAddUser(false)
+        if(succeded){
+            document.location.reload()
+        }
+    }, [])
     
     useEffect( () => {
         setHeading("Administrateurs","")
@@ -33,7 +40,7 @@ export default function Administrators({setHeading}: props){
 
     return(
         <>
-            {showAddUser && <AddAdmin onClose={() => setShowAddUser(false) } />}
+            {showAddUser && <AddAdmin onClose={onEditClosed } />}
             <RenderList />
         </>
     )

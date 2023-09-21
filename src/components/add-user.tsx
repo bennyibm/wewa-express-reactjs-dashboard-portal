@@ -12,7 +12,7 @@ import InputPatterns from "../utils/constants/input-patterns";
 import { useApiCrud } from "../hooks";
 import raiseCustomEvent from "../utils/helpers/events";
 type props = {
-    onClose: () => void
+    onClose: (succeed?: boolean) => void
     driver?: Driver
 }
 type States = {
@@ -31,13 +31,13 @@ export default function AddAdmin({onClose, driver}: props) {
             save(fields)
             .then( res => {
                 raiseCustomEvent("show-alert", { message: "Administrateur créé", severity: "success"  })
-                onClose()
+                onClose(true)
             })
             .catch( err => {
                 console.log("error");
             })
         }, 2000)
-        executeAfter( {delay: 2000, callback : () => setStates( prev => ({...prev, isLoading: false}))})
+        // executeAfter( {delay: 2000, callback : () => setStates( prev => ({...prev, isLoading: false}))})
     }, [onClose, save])
     
     return(

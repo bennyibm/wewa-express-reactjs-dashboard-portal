@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useApiCrud } from '../hooks';
 import { Driver, ResponseModel } from '../models';
 import DataTable from '../components/data-table.component';
@@ -37,6 +37,13 @@ export default function DriversPage({setHeading}: props){
             <DataTable<Partial<Driver>> title="" fetchData={findAll} actionButton={{ label:"détails", link:"" }} headers={headers} headbutton={{ label: "Ajouter", onClick: () => setShowEditDriver(true), icon: <FiUserPlus /> }} />
         </div>
     ), [findAll, headers])
+
+    const onEditClosed = useCallback( (succeded?: boolean) => {
+        setShowEditDriver(false)
+        if(succeded){
+            document.location.reload()
+        }
+    }, [])
     
     useEffect( () => {
         setHeading("Chauffeurs enregistrés","")
@@ -44,7 +51,7 @@ export default function DriversPage({setHeading}: props){
 
     return(
         <>
-            {showEditDriver && <EditDriver onClose={() => setShowEditDriver(false) } />}
+            {showEditDriver && <EditDriver onClose={onEditClosed} />}
             <RenderList />
         </>
     )

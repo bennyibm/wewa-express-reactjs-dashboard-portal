@@ -12,7 +12,7 @@ import InputPatterns from "../utils/constants/input-patterns";
 import { useApiCrud } from "../hooks";
 import raiseCustomEvent from "../utils/helpers/events";
 type props = {
-    onClose: () => void
+    onClose: (succed?: boolean) => void
     driver?: Driver
 }
 type States = {
@@ -31,7 +31,7 @@ export default function EditDriver({onClose, driver}: props) {
             save(fields)
             .then( res => {
                 raiseCustomEvent("show-alert", { message: "Le nouveau chauffeur a bien été enregistré", severity: "success"  })
-                onClose()
+                onClose(true)
             })
             .catch( err => {
                 console.log("error");
