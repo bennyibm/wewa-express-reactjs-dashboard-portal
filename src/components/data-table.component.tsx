@@ -68,49 +68,51 @@ export default function DataTable<T extends AbstractEntity>({title, headers, ren
                     { headbutton && <Button className="h-fit flex items-center gap-x-2" link={headbutton.link} onClick={headbutton.onClick}>{headbutton.label} {headbutton.icon}</Button> }
                 </div>
             </div>
-            <table className="px-6 w-full">
-                { !states.isLoading && ((states.data?.contents?.length || 0) > 0) && (                    
-                    <thead>
-                        <tr className="border-b bg-primary/10">
-                            { headers.map( ({label, key}, index) => (
-                                <th key={index} className="font-semibold text-xs sm:text-base text-left p-4">{label}</th>
-                            ))}
-                            {/* { actionButton && ( <th className="bg-primary/40 w-fit text-left p-4"> Action </th> ) } */}
-                        </tr>
-                    </thead>
-                ) }
-                <tbody className="w-full">
-                    { !states.isLoading && states.data?.contents?.map( item => (
-                        <tr key={item._id} className="text-xs sm:text-sm w-full border-b odd:bg-primary/[.03]">
-                            { headers.map( ({key, render}, headerIndex) => (
-                                <td className="p-4" key={headerIndex}>{ render ? render(item) : item[key] as any}</td>
-                            )) }
+            <div className="w-full overflow-auto">
+                <table className="px-6 w-full">
+                    { !states.isLoading && ((states.data?.contents?.length || 0) > 0) && (                    
+                        <thead>
+                            <tr className="border-b bg-primary/10">
+                                { headers.map( ({label, key}, index) => (
+                                    <th key={index} className="font-semibold text-xs sm:text-base text-left p-4">{label}</th>
+                                ))}
+                                {/* { actionButton && ( <th className="bg-primary/40 w-fit text-left p-4"> Action </th> ) } */}
+                            </tr>
+                        </thead>
+                    ) }
+                    <tbody className="w-full">
+                        { !states.isLoading && states.data?.contents?.map( item => (
+                            <tr key={item._id} className="text-xs sm:text-sm w-full border-b odd:bg-primary/[.03]">
+                                { headers.map( ({key, render}, headerIndex) => (
+                                    <td className="p-4" key={headerIndex}>{ (render ? render(item) : item[key] as any).toString().replaceAll("-", "")}</td>
+                                )) }
 
-                            { actionButton && (
-                                <td className="py-2 px-4 bg-primary/5">
-                                    <Link className="flex items-center gap-x-2 text- underline" to={actionButton.link || ""} onClick={actionButton.onClick}>
-                                        {actionButton.label} 
-                                        {/* <CgDetailsMore/> */}
-                                    </Link>
+                                { actionButton && (
+                                    <td className="py-2 px-4 bg-primary/5 whitespace-nowrap">
+                                        <Link className="flex items-center gap-x-2 text- underline" to={actionButton.link || ""} onClick={actionButton.onClick}>
+                                            {actionButton.label} 
+                                            {/* <CgDetailsMore/> */}
+                                        </Link>
+                                    </td>
+                                ) }
+                            </tr>
+                        ))}
+
+                        { states.isLoading && (
+                            <tr className="w-full">
+                                <td colSpan={headers.length} className="py-16 flex justify-center items-center">
+                                    <Loader/>
                                 </td>
-                            ) }
-                        </tr>
-                    ))}
+                            </tr>
+                        )}
 
-                    { states.isLoading && (
-                        <tr className="w-full">
-                            <td colSpan={headers.length} className="py-16 flex justify-center items-center">
-                                <Loader/>
-                            </td>
-                        </tr>
-                    )}
-
-                    { states.isError && <ErrorComponent errorText="Désolé! impossible de satisfaire à votre demande" reloadText="" callback={loadData} />}
-                </tbody>
-                <tfoot className="">
-                    <tr></tr>
-                </tfoot>
-            </table>
+                        { states.isError && <ErrorComponent errorText="Désolé! impossible de satisfaire à votre demande" reloadText="" callback={loadData} />}
+                    </tbody>
+                    <tfoot className="">
+                        <tr></tr>
+                    </tfoot>
+                </table>
+            </div>
 
             { !states.isLoading && (states.data?.totalElements === 0) && (
                 <div className="text-slate-400 text-sm font-light flex flex-col gap-y-2 justify-center items-center py-4 h-40">
