@@ -28,11 +28,11 @@ export default function Modal({className = '', contentClassName = '', showCloseB
 
   return (
     <section className='fixed z-[100] inset-0 w-full h-full bg-black/60 grid items-center justify-center backdrop-blur'>
-        <div className={`relative bg-white md:min-h-[30rem] max-w-3xl rounded-md ${className}`}>
+        <div className={`relative bg-white md:min-h-[30rem] max-w-sm sm:max-w-md md:max-w-xl lg:max-w-3xl rounded-md ${className}`}>
             <button onClick={onClose} type='button' className='absolute z-20 top-0 right-1/2 lg:right-0 -translate-y-1/2 translate-x-1/2 w-8 lg:w-12 h-8 lg:h-12 flex justify-center items-center text-white bg-primary shadow-2xl rounded-full' >
                 <AiOutlineClose />
             </button>
-            <div className='max-h-[calc(100vh-3rem)] overflow-y-auto'>
+            <div className='relative max-h-[calc(100vh-3rem)] overflow-y-auto'>
                 {children}
             </div>
         </div>

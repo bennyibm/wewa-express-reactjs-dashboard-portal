@@ -36,7 +36,7 @@ export default function CustomSelectBox({className = '', placeholder, name = '',
 
     const RenderOption = useCallback( ({option} : {option : Option}) => (
         <div 
-            className={`flex items-center py-2 px-1 text-sm cursor-pointer hover:bg-gray-100 ${isCurrent(option) ? 'bg-gray-100 text-primary' : ''}`} 
+            className={`flex items-center py-2 px-1  max-md:text-xs text-sm cursor-pointer hover:bg-gray-100 ${isCurrent(option) ? 'bg-gray-100 text-primary' : ''}`} 
             onClick={ () => setCurrentOption(option)}
         >
             {isCurrent(option) && <i className="fas fa-check mx-1 " />}
@@ -72,7 +72,7 @@ export default function CustomSelectBox({className = '', placeholder, name = '',
 
     return(
         <div className="relative" onClick={e => e.stopPropagation()}>
-            <div className={`cursor-pointer flex justify-between items-center h-12 border rounded-md ${className}`} onClick={ e => {e.preventDefault(); setShowDropdown( prev => !prev)}}>
+            <div className={`cursor-pointer flex justify-between items-center max-md:h-10 h-12 border rounded-md ${className}`} onClick={ e => {e.preventDefault(); setShowDropdown( prev => !prev)}}>
                 <label className="text-gray-400 truncate whitespace-nowrap cursor-pointer p-2 flex-1" htmlFor="">{label}</label>
                 <div className="flex justify-center items-center w-6 border-l h-full cursor-pointer  text-gray-400 hover:bg-gray-100 hover:text-gray-500">
                     <i className={`fas fa-angle-right ${showDropdown ? '-rotate-90' : 'rotate-90'}`} />

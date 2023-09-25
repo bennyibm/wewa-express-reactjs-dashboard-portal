@@ -56,7 +56,7 @@ export default function EditDriver({onClose, driver}: props) {
     }, [states?.error])
     return(
         <Modal showCloseButton onClose={onClose}>
-            <h3 className="bg-primary/20 p-4 md:text-2xl border-b-2 border-primary/10"> { driver ? "" : "Enregistrer un nouveau Chauffeur"} </h3>
+            <h3 className="sticky top-0 bg-[#f7dfd9] p-4 text-sm sm:text-lg md:text-2xl border-b-2 border-primary/10"> { driver ? "" : "Enregistrer un nouveau Chauffeur"} </h3>
             { states?.error && (
                 <Alert onClose={ () => setStates( prev => ({...prev, error: undefined}))} variant="filled" elevation={1} severity={states.error === HttpStatusCode.CONFLICT ? "warning" : "error"}>
                     {states.error === HttpStatusCode.CONFLICT ? "cette adresse mail est déjà utilisé par un autre" : "une erreure est survenu! veillez réessayer svp!"}

@@ -65,7 +65,7 @@ type props = {
 
 export function InputFieldTemplate1( props : Field & {name : string, validity? : FieldValidity, hasError? : boolean} ){
     return (
-        <div className={`w-full ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
+        <div className={`w-full  max-md:text-xs  ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
             <div className="w-full">
                 <div className="mb-2 flex items-center flex-wrap w-full gap-2">                       
                     <label className="text-gray-500" htmlFor={props.id}>{props.label}</label>
@@ -73,7 +73,7 @@ export function InputFieldTemplate1( props : Field & {name : string, validity? :
                     {/* (props.validity === FieldValidity.EMPTY) && <p className='text-red-500 text-[.6rem]'>{props.onEmptyErrorMessage}</p>} */}
                 </div>
                 <input  
-                    className='rounded-md p-2 h-12 w-full border'
+                    className='rounded-md p-2 max-md:h-10 h-12 w-full border'
                     id={props.id}
                     type={ (props.type === FieldInputType.PASSWORD) || (props.type === FieldInputType.DATE) ? props.type : undefined} 
                     name={props.name} 
@@ -90,7 +90,7 @@ export function InputFieldTemplate1( props : Field & {name : string, validity? :
 
 export function InputFieldTextArea( props : Field & {name : string, validity? : FieldValidity, hasError? : boolean} ){
     return (
-        <div className="w-full">
+        <div className="w-full max-md:text-xs">
             <div className="mb-2 flex items-center flex-wrap w-full gap-2">                       
                 <label className="text-gray-500" htmlFor={props.id}>{props.label}</label>
                 { props.hasError && <p className='text-red-500 text-[.6rem]'>{ (props.validity === FieldValidity.EMPTY) ? props.onEmptyErrorMessage : props.onInvalidErrorMessage}</p>}
@@ -110,7 +110,7 @@ export function InputFieldTextArea( props : Field & {name : string, validity? : 
 
 export function InputFieldCustomSelect( props : Field & {name : string, validity? : FieldValidity, hasError? : boolean} ){
     return(
-        <div className={`w-full ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
+        <div className={`w-full max-md:text-xs ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
             <div className="mb-2 flex items-center flex-wrap w-full gap-2">
                 <label className="text-gray-500" htmlFor={props.id}>{props.label}</label>
                 { props.hasError && (
@@ -145,7 +145,7 @@ export function InputCheckBoxList ( props: Field & { name: string, validity?: Fi
     }, [props]) 
 
     return (
-        <div className={`w-full ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
+        <div className={`w-full max-md:text-xs ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
              <div className="mb-2 flex items-center flex-wrap w-full gap-2">
                 <label className="text-gray-500" htmlFor={props.id}>{props.label}</label>
                 { props.hasError && (
@@ -175,16 +175,16 @@ export function InputRadioButtonList(props: Field & { name: string, validity?: F
     }, [props.name, props.type])
     
     return (
-        <div className={`w-full ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
+        <div className={`w-full max-md:text-xs ${props.extraData?.halfWidth ? "md:w-[48%]" : ""}`}>
              <div className="mb-2 flex items-center flex-wrap w-full gap-2">
                 <label className="text-gray-500" htmlFor={props.id}>{props.label}</label>
                 { props.hasError && (
                     <p className='text-red-500 text-[.6rem]'> { props.validity === FieldValidity.EMPTY ? props.onEmptyErrorMessage : props.onInvalidErrorMessage } </p>
                 )}
             </div>           
-            <div className={`${props.extraData?.flexWrapOptions ? "flex-wrap" : ""} ${props.extraData?.flexCol? "flex-col gap-y-3": "items-center"} text-sm flex gap-x-2.5 lg:gap-x-5`}>
+            <div className={`${props.extraData?.flexWrapOptions ? "flex-wrap" : ""} ${props.extraData?.flexCol? "flex-col gap-y-3": "items-center"} max-md:text-xs text-sm flex gap-x-2.5 lg:gap-x-5`}>
                 { props.extraData?.options?.map( (opt: any, key: number) => (
-                    <button type="button" autoFocus={props.extraData?.autoFocus && key===0} key={key.valueOf()} className={`${props.extraData?.addWrapper ? "py-4 px-2 border rounded": ""} h-12 flex gap-x-1 items-center cursor-pointer capitalize text-left text-black`} onClick={() => onRadioClick(key)}>
+                    <button type="button" autoFocus={props.extraData?.autoFocus && key===0} key={key.valueOf()} className={`${props.extraData?.addWrapper ? "py-4 px-2 border rounded": ""} max-md:h-10 h-12 flex gap-x-1 items-center cursor-pointer capitalize text-left text-black`} onClick={() => onRadioClick(key)}>
                         <input onChange={ e => props.onChange && props.onChange({name: props.name, value: e.target.value})} className={`${props.required ? "required" : ""} input peer hidden`} defaultChecked={ props.initialValue === (opt?.value || opt)} key={key.valueOf()} id={`${props.type}-${props.name}-${key}`} name={props.name} type="radio" value={opt?.value || opt} />
                         <span className='inline-block w-6 h-6 rounded-full bg-gray-200 peer-checked:bg-primary relative peer-checked:after:bg-white after:absolute after:top-1/2 after:left-1/2 after:-translate-y-1/2 after:-translate-x-1/2 after:w-3 after:h-3 after:rounded-full' />
                         <span className='flex-1 '>{opt?.label || opt}</span>
