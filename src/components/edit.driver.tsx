@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi"
 import { Driver, User } from "../models";
 import Modal from "./modal";
@@ -11,6 +11,8 @@ import { executeAfter } from "../utils/helpers/timeout-interval";
 import InputPatterns from "../utils/constants/input-patterns";
 import { useApiCrud } from "../hooks";
 import raiseCustomEvent from "../utils/helpers/events";
+import HttpStatusCode from '../utils/constants/http-status-code';
+import { Alert } from "@material-ui/lab";
 type props = {
     onClose: (succed?: boolean) => void
     driver?: Driver
@@ -18,15 +20,17 @@ type props = {
 type States = {
     isLoading?: boolean
     data?: Partial<Driver>
+    error?: HttpStatusCode
 }
 export default function EditDriver({onClose, driver}: props) {
     const [states, setStates] = useState<States>()
     const { save } = useApiCrud("drivers")
+    const errorAlertRef = useRef<number>()
     const onSubmit= useCallback( (fields: any) => {
         
         console.log(fields);
         
-        setStates( prev => ({...prev, isLoading: true}))
+        setStates( prev => ({...prev, isLoading: true, error: undefined}))
         setTimeout( () => {
             save(fields)
             .then( res => {
@@ -34,15 +38,30 @@ export default function EditDriver({onClose, driver}: props) {
                 onClose(true)
             })
             .catch( err => {
-                console.log("error");
+                setStates( prev => ({...prev, error: err?.response?.data?.statusCode || HttpStatusCode.CANT_REACH}))
+            })
+            .finally( () => {
+                setStates( prev => ({...prev, isLoading: false}))
             })
         }, 2000)
-        executeAfter( {delay: 2000, callback : () => setStates( prev => ({...prev, isLoading: false}))})
     }, [onClose, save])
     
+    useEffect( () => {
+        
+        if(states?.error){
+            errorAlertRef.current = setTimeout( () => setStates( prev => ({...prev, error: undefined})), 7000, "")    
+        }else{
+            clearTimeout(errorAlertRef.current)
+        }
+    }, [states?.error])
     return(
         <Modal showCloseButton onClose={onClose}>
             <h3 className="bg-primary/20 p-4 md:text-2xl border-b-2 border-primary/10"> { driver ? "" : "Enregistrer un nouveau Chauffeur"} </h3>
+            { states?.error && (
+                <Alert onClose={ () => setStates( prev => ({...prev, error: undefined}))} variant="filled" elevation={1} severity={states.error === HttpStatusCode.CONFLICT ? "warning" : "error"}>
+                    {states.error === HttpStatusCode.CONFLICT ? "cette adresse mail est déjà utilisé par un autre" : "une erreure est survenu! veillez réessayer svp!"}
+                </Alert>
+            )}
             <MyForm onSubmit={onSubmit} className="p-4 md:p-8 flex flex-wrap justify-between gap-4"
                 onChange={({name, value}: {name: string, value: string}) =>  setStates( prev => ({...prev, data: {...prev?.data, [name]: value }}))}
                 fields={{ 
