@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { CgDetailsMore } from "react-icons/cg"
 import { PiList } from "react-icons/pi"
+import { TbListDetails, TbTrash } from "react-icons/tb"
 import SearchBox from "./search-box"
 import ErrorComponent from "./error-component"
 import { GetAllParams } from "../hooks/api/use-api-crud"
@@ -16,10 +17,12 @@ type props<T>={
     renderEmptyList?: Element
     renderError?: Element
     title?: string
-    headers: {label: string, key: keyof T, render?: (el: any) => any }[]
+    headers: {label: string, key: keyof T, customClasses?: (el: any) => string, render?: (el: any) => any }[]
     noSearchBox?: boolean
     headbutton?: {label: string, link?: string, onClick?: () => void, icon?: any}
     actionButton?: { label: string, onClick?: () => void, link?: string }
+    onDeleteButton?: (item: T) => void
+    onDetailsButton?: (item: T) => void
 }
 
 type States<T>={
@@ -32,7 +35,7 @@ type States<T>={
     hasMoreItems?: boolean
 }
 
-export default function DataTable<T extends AbstractEntity>({title, headers, renderItem, renderEmptyList, renderError, fetchData, noSearchBox, headbutton, actionButton}: props<T>){
+export default function DataTable<T extends AbstractEntity>({onDeleteButton, onDetailsButton, title, headers, renderItem, renderEmptyList, renderError, fetchData, noSearchBox, headbutton, actionButton}: props<T>){
     const [states, setStates] = useState<States<T>>({page: 1, isLoading: false,})
 
     const loadData = useMemo( () => () => {
@@ -83,16 +86,26 @@ export default function DataTable<T extends AbstractEntity>({title, headers, ren
                     <tbody className="w-full">
                         { !states.isLoading && states.data?.contents?.map( item => (
                             <tr key={item._id} className="text-xs sm:text-sm w-full border-b odd:bg-primary/[.03]">
-                                { headers.map( ({key, render}, headerIndex) => (
-                                    <td className="p-4" key={headerIndex}>{ (render ? render(item) : item[key] as any).toString().replaceAll("-", "")}</td>
+                                { headers.map( ({key, render, customClasses = () => {}}, headerIndex) => (
+                                    <td className="p-2 md:p-4" key={headerIndex}>
+                                        <div className={customClasses(render ? render(item) : item[key]) as any}>
+                                            { (render ? render(item) : item[key] as any).toString().replaceAll("-", "")}
+                                        </div>
+                                    </td>
                                 )) }
 
                                 { actionButton && (
-                                    <td className="py-2 px-4 bg-primary/5 whitespace-nowrap">
-                                        <Link className="flex items-center gap-x-2 text- underline" to={actionButton.link || ""} onClick={actionButton.onClick}>
-                                            {actionButton.label} 
-                                            {/* <CgDetailsMore/> */}
-                                        </Link>
+                                    <td className="py-2 px-4 bg-primary/5 whitespace-nowrap w-14 ">
+                                        <div className="flex items-center gap-x-2">
+                                            <button className="bg-yellow-600 hover:bg-yellow-700 text-white w-8 h-8 flex items-center justify-center gap-x-2 text- underline" onClick={actionButton.onClick}>
+                                                {/* {actionButton.label}  */}
+                                                {/* <CgDetailsMore/> */}
+                                                <TbListDetails className=""/>
+                                            </button>
+                                            <button className="bg-red-600 hover:bg-red-700 text-white w-8 h-8 flex items-center justify-center gap-x-2 text- underline">
+                                                <TbTrash className=""/>
+                                            </button>
+                                        </div>
                                     </td>
                                 ) }
                             </tr>

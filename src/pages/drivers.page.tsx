@@ -28,7 +28,6 @@ export default function DriversPage({setHeading}: props){
             {render: (driver: Driver) => renderField(driver, "last"), label: "Nom", key: "last" as keyof Driver},
             { label: "Genre", key: "gender" as keyof Driver},
             {render: (driver: Driver) => renderField(driver, "phone"), label: "Téléphone", key: "phone" as keyof Driver},
-            { label: "Status", key: "status" as keyof Driver},
         ])
     }, [])
 

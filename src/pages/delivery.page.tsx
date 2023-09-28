@@ -1,22 +1,26 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { BiUserPlus } from "react-icons/bi"
-import { useApiCrud } from '../hooks';
+import { useApiCrud, useApiSecured } from '../hooks';
 import { Client, Delivery, Driver } from '../models';
 import DataTable from '../components/data-table.component';
-import { GetAllParams } from '../hooks/api/use-api-crud';
-import DUMMY_DELIVERIES from '../utils/dummy/delivery';
 import { Button } from '../components';
+import { MdOutlineDeliveryDining } from "react-icons/md"
+import AddDelivery from '../components/add.delivery';
 type props={
     setHeading: (title: string, description: string) => void
 }
+
+type States = {
+    drivers?: Driver[]
+    clients?: Client[]
+}
+
 export default function DeliveryPage({setHeading}: props){
-    // const {findAll} = useApiCrud<Delivery>("delievries")
-    const findAll = (props: GetAllParams) => Promise.resolve({
-        totalElements: DUMMY_DELIVERIES.length,
-        totalPages: 1,
-        currentPage: 1,
-        contents: DUMMY_DELIVERIES.slice(0, 10)
-    })
+    const {findAll} = useApiCrud<Delivery>("deliveries")
+    const {api} = useApiSecured("")
+    const [showAddDelivery, setShowAddDelivery] = useState(false)
+
+    const [states, setStates] = useState<States>()
 
     const headers= useMemo( () => {
         const renderDriver = (delivery?: Delivery) => {
@@ -34,19 +38,42 @@ export default function DeliveryPage({setHeading}: props){
 
         return ([
             {label: "Code", key: "code" as keyof Delivery},
-            {label: "Client", key: "client" as keyof Delivery, render: (delivery: Delivery) => `${delivery?.client?.first} ${delivery?.client?.last}`},
+            {label: "Client", key: "client" as keyof Delivery, render: (delivery: Delivery) => `${delivery?.client?.user?.first} ${delivery?.client?.user?.last}`},
             {label: "Chauffeur", key: "driver" as keyof Delivery, render:renderDriver},
             {label: "Status", key: "status" as keyof Delivery},
         ])
+    }, [])
+
+    const RenderList = useMemo( () => () => (
+        <div className="flex flex-col gap-y-2 shadow bg-white rounded-lg overflow-hidden">
+            <DataTable<Delivery>  actionButton={{ label:"détails", link:"" }} fetchData={findAll} headers={headers} headbutton={{ label: "créer", onClick: () => setShowAddDelivery(true), icon: <MdOutlineDeliveryDining className='text-2xl' /> }} />
+        </div>
+    ), [findAll, headers])
+
+    const onEditClosed = useCallback( (succeded?: boolean) => {
+        setShowAddDelivery(false)
+        if(succeded){
+            document.location.reload()
+        }
+    }, [])
+
+    const fetchTiers = useCallback( () => {
+        api.get("drivers").then( ({data}) => setStates(prev => ({...prev, drivers: data.contents })) )
+        api.get("clients").then( ({data}) => setStates(prev => ({...prev, clients: data.contents })) )
     }, [])
     
     useEffect( () => {
         setHeading("Historique des livraison","")
     }, [setHeading])
 
+    useEffect( () => {
+        fetchTiers()
+    }, [])
+
     return(
-        <div className="flex flex-col gap-y-2 shadow bg-white rounded-lg overflow-hidden">
-            <DataTable<Delivery>  actionButton={{ label:"détails", link:"" }} fetchData={findAll} headers={headers} />
-        </div>
+        <>
+            {showAddDelivery && <AddDelivery data={states} onClose={onEditClosed} />}
+            <RenderList />
+        </>        
     )
 }
