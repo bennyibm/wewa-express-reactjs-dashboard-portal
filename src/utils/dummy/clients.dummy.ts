@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Client } from '../../models';
+import { getStatus } from '../helpers/others';
 
 export function generateClients(n: number){
     
@@ -13,7 +14,7 @@ export function generateClients(n: number){
             phone: faker.phone.number("+243 8# ### ####"),
             contact: {},
             address: {},
-            status: [ "CREATED", "CONFIRMED", "PENDING" ].at(faker.number.int({min: 0, max: 2})) as any
+            status: getStatus(faker.number.int({min: 0, max: 2}))
         }
     })
 }

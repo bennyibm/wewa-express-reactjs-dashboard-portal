@@ -1,8 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { Delivery } from '../../models';
 import { generateDrivers } from './drivers';
+import Status from '../../models/common/status';
 
 export function generateDeliveries(n: number){
+    // return []
     return Array(n).fill(null).map( () : Delivery => {
         const gender = faker.person.sex() as any
         const phone = faker.phone.number("+243 8# ## ### ##")
@@ -28,7 +30,7 @@ export function generateDeliveries(n: number){
                 },
 
             },
-            status: [ "CREATED", "DELIVERED", "ON_THE_WAY", "ABORTED", "PENDING" ].at(faker.number.int({min: 0, max: 5})) as any
+            status: Status.CONFIRMED // [ "CREATED", "DELIVERED", "ON_THE_WAY", "ABORTED", "PENDING" ].at(faker.number.int({min: 0, max: 5})) as any
         }
     })
 }

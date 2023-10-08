@@ -1,9 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { Driver } from '../../models';
 import Status from '../../models/common/status';
+import { getStatus } from '../helpers/others';
 
 export function generateDrivers(n: number){
-    
+    // return []
     return Array(n).fill(null).map( () : Driver => {
         const gender = faker.person.sex() as any
         return {
@@ -16,7 +17,7 @@ export function generateDrivers(n: number){
                 status: Status.CONFIRMED
             },
             gender,
-            status: [ "CREATED", "CONFIRMED", "PENDING" ].at(faker.number.int({min: 0, max: 2})) as any
+            status: getStatus(faker.number.int({min: 0, max: 2}))
         }
     })
 }
